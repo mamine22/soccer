@@ -1,0 +1,73 @@
+<div class="hero overlay" style="background-image: url('assets/images/bg_3.jpg');">
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <h1 class="text-white">Searsh Weather</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row ">
+        <div class="col-8 p-3">
+            <div>
+                <form #weatherForm="ngForm" (ngSubmit)="searsh()" class="row">
+                    <div class="mb-3 col-12">
+                        <label for="exampleInputEmail1" class="form-label">country</label>
+                        <input type="text" class="form-control" name="country" [(ngModel)]="weather.country">
+
+                        <button type="submit" class="btn btn-primary mt-3">Searsh</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="container py-5 h-100" *ngIf="exist">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-8 col-lg-8 col-xl-4">
+                    <div class="card" style="color: #4B515D; border-radius: 35px;">
+                        <div class="card-body p-4">
+
+                            <div class="d-flex">
+                                <h6 class="flex-grow-1">{{result.country}}</h6>
+                                <h6>{{time}}
+                                    <div>
+                                        <span class="small" style="color: #868B94">Last update</span>
+                                    </div>
+                                </h6>
+                            </div>
+
+                            <div class="d-flex flex-column text-center mt-5 mb-4">
+                                <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> {{temp}}°C </h6>
+                                <!-- <span class="small" style="color: #868B94">{{result.status}}</span> -->
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1" style="font-size: 1rem;">
+
+                                    <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i><span
+                                            class="ms-1"> {{result.humidity}} %</span>
+                                    </div>
+
+                                    <div><i class="fa fa-thermometer-quarter" style="color: #868B94;"></i><span
+                                            class="ms-1"> {{result.pressure}} hPa </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img [src]="result.icon" width="100px">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

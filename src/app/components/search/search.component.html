@@ -1,0 +1,36 @@
+<div class="hero overlay" style="background-image: url('assets/images/bg_3.jpg');">
+
+    <div class="container">
+
+        <form #searshForm="ngForm" (ngSubmit)="searsh()">
+            <div class="row align-items-center" >
+                <div class="input-group mb-3" style=" margin-top: 70px;">
+                    <input type="text" class="form-control" placeholder="score One" name="scoreOne"
+                        [(ngModel)]="match.scoreOne" style=" color: red;">
+                    <input type="text" class="form-control" placeholder="score Two" name="scoreTwo"
+                        [(ngModel)]="match.scoreTwo" style=" color: red;">
+                    <button class="btn btn-danger" type="submit" id="button-addon2">Searsh</button>
+                </div>
+
+
+                <div class="col-12" *ngFor="let result of findedMatches">
+                    
+                        <app-match-result [resultInput]="result"></app-match-result>
+                        <!-- <div *ngIf="searshMatch == result.scoreOne || searshMatch == result.scoreTwo">
+                            <app-match-result [resultInput]="result"></app-match-result>
+                        </div> -->
+                        <div *ngIf="findedMatches?.length == 0">
+                            <span>NO Founded Matches !</span> 
+                        </div>
+                   
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+</div>

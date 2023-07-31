@@ -1,0 +1,64 @@
+<div class="d-flex team-vs mt-4">
+    <div class="team-1 w-50">
+        <div class="team-details w-100 text-center">
+            <img src="assets/images/logo_1.png" alt="Image" class="img-fluid">
+            <h3 [ngClass]="cssColor(resultInput.scoreOne,resultInput.scoreTwo)"> {{resultInput.teamOne}}</h3>
+
+        </div>
+
+    </div>
+    <span class="score">
+        <span [ngStyle]="{'color':scoreColor(resultInput.scoreOne,resultInput.scoreTwo)}">
+            {{resultInput.scoreOne}}
+
+        </span>
+        -
+        <span [ngStyle]="{'color':scoreColor(resultInput.scoreTwo,resultInput.scoreOne)}">
+            {{resultInput.scoreTwo}}
+        </span>
+    </span>
+
+    <div class="team-1 w-50">
+        <div class="team-details w-100 text-center">
+            <img src="assets/images/logo_1.png" alt="Image" class="img-fluid">
+            <h3 [ngClass]="cssColor(resultInput.scoreOne,resultInput.scoreTwo)"> {{resultInput.teamTwo}}</h3>
+        </div>
+    </div>
+
+</div>
+<div class="d-flex team-vs mt-1 ">
+    <div class="team-1 w-50">
+
+        <div class="widget-next-match">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let res of resultInput.comment">
+
+                    <td class=" d-flex">
+                        <div class="img mr-3" >
+                            <img [src]="res?.img" alt="Image" class="img-fluid" style="width: 50px; border-radius: 500%">
+                          </div>
+                        <div class="text">
+                            <span class="meta">{{res?.firstName}} {{res?.lastName}}</span>
+                            <h3 class="mb-4">{{res?.content}}</h3>
+                        </div>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="team-1 w-50">
+        <form #commentForm="ngForm" (ngSubmit)="addComment()" class="row">
+            <div class="mb-3 col-12">
+                <label for="exampleInputEmail1" class="form-label">Comment</label>
+                <input type="text" class="form-control" name="content" [(ngModel)]="comment.content">
+                <button type="submit" class="btn btn-primary mt-3">add</button>
+            </div>
+        </form>
+    </div>
+</div>

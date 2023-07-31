@@ -1,0 +1,349 @@
+//business logique
+
+//import mongoose module 
+const mongoose = require('mongoose');
+//connect APP with DataBase
+mongoose.connect('mongodb://127.0.0.1:27017/sportDB');
+//import express module 
+const express = require("express")
+// import body-parser module
+const bodyParser = require("body-parser");
+//create express application
+const app = express()
+
+// Configure Body-parser
+// Send JSON responses
+app.use(bodyParser.json());
+
+// Get objects from Request
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Security configuration
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Origin, Accept, Content-Type, X-Requested-with, Authorization, expiresIn"
+    );
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, DELETE, OPTIONS, PATCH, PUT"
+    );
+    next();
+});
+// Models Importation
+const Match = require("./models/match")
+
+//function to generate ID
+function generateId(tab) {
+
+    var max;
+    if (tab.length == 0) {
+        max = 0;
+    }
+    else {
+        max = tab[0].id;
+        for (var i = 1; i < tab.length; i++) {
+            if (tab[i].id > max) {
+                max = tab[i].id;
+            }
+        }
+    }
+    return max + 1;
+}
+
+
+// ============================
+// ========== Matches =========
+// ============================
+
+//Matches Tab Simulation
+let matches = [
+    { id: 1, scoreOne: 0, scoreTwo: 1, teamOne: "EST", teamTwo: "CSS" },
+    { id: 2, scoreOne: 3, scoreTwo: 1, teamOne: "CA", teamTwo: "ESS" },
+    { id: 3, scoreOne: 3, scoreTwo: 5, teamOne: "EST", teamTwo: "CSS" },
+]
+
+
+
+//GET all Matches
+app.get("/matches", (req, res) => {
+    console.log("Here into BL: GET all Matches");
+    res.json({ matchesArray: matches, message: "Done!" });
+})
+
+let findedMatch;
+//GET Match by ID
+app.get("/matches/:id", (req, res) => {
+    console.log("Here into BL: GET Match")
+    let id = req.params.id;
+    for (let i = 0; i < matches.length; i++) {
+        if (matches[i].id == id) {
+            findedMatch = matches[i]
+            break;
+        }
+    }
+    res.json({ match: findedMatch });
+})
+
+//ADD matches
+app.post("/matches", (req, res) => {
+    console.log("Here into BL: ADD Match")
+    let match = req.body;
+    match.id = generateId(matches)
+    matches.push(match)
+    res.json({ message: "Added match successfly !" });
+
+})
+
+//DELETE Match
+app.delete("/matches/:id", (req, res) => {
+    console.log("Here into BL: DELETE Match")
+    let id = req.params.id;
+    for (let i = 0; i < matches.length; i++) {
+        if (matches[i].id == id) {
+            matches.splice(i, 1)
+            break;
+        }
+    }
+    res.json({ isDeleted: true });
+})
+
+
+
+//EDIT Match
+app.put("/matches", (req, res) => {
+    console.log("Here into BL: EDIT Match")
+    let match = req.body;
+    for (let i = 0; i < matches.length; i++) {
+        if (matches[i].id == match.id) {
+            matches[i] = match;
+            break;
+        }
+    }
+    res.json({ isUpdated: true })
+})
+
+//Searsh  Matches
+app.post(("/matches/searsh", (req, res) => {
+    console.log("Here into BL: Searsh Match", req.body)
+    let searsh = req.body
+    let findedMatches = matches.filter((obj) => {
+        return obj.scoreOne == searsh.scoreOne || obj.scoreTwo == searsh.scoreTwo
+    });
+    res.json({ searshTab: findedMatches })
+})
+)
+
+// ============================
+// =========== Teams ==========
+// ============================
+
+//Teams Tab Simulation
+let teams = [
+    { id: 1, name: "EST", owner: "Amine", stadium: "Rades", foundation: 1626, staduimId: "" },
+    { id: 2, name: "CA", owner: "Amine", stadium: "Sousse", foundation: 1689, staduimId: "" },
+    { id: 3, name: "REAL", owner: "Amine", stadium: "Beja", foundation: 1985, staduimId: "" },
+]
+//GET all Teams
+app.get("/teams", (req, res) => {
+    console.log("Here into BL: GET all Teams")
+    res.json({ teamsTab: teams, message: "Done! " });
+})
+
+let findedTeam;
+//GET Team by ID
+app.get("/teams/:id", (req, res) => {
+    console.log("Here into BL: GET Team")
+    let id = req.params.id;
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i].id == id) {
+            findedTeam = teams[i]
+            break;
+        }
+    }
+    res.json({ team: findedTeam });
+})
+
+//ADD Team
+app.post("/teams", (req, res) => {
+    console.log("Here into BL: ADD team")
+    let team = req.body;
+    team.id = generateId(teams)
+    teams.push(team)
+    res.json({ message: "Added team successfly !" });
+})
+
+//DELETE Team
+app.delete("/teams/:id", (req, res) => {
+    console.log("Here into BL: DELETE Team")
+    let id = req.params.id;
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i].id == id) {
+            teams.splice(i, 1)
+            break;
+        }
+    }
+    res.json({ isDeleted: true });
+})
+
+//EDIT Team
+app.put("/teams", (req, res) => {
+    console.log("Here into BL: EDIT team")
+    let team = req.body;
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i].id == team.id) {
+            teams[i] = team;
+            break;
+        }
+    }
+    res.json({ isUpdated: true })
+})
+// ============================
+// =========== Players ========
+// ============================
+
+//Players Tab Simulation
+let players = [
+    { id: 1, name: "Ronaldo", position: "ATT", nbre: 7, age: 37, teamId: "" },
+    { id: 2, name: "Rafinha", position: "RMD", nbre: 9, age: 25, teamId: "" },
+    { id: 3, name: "Messi", position: "ATT", nbre: 10, age: 38, teamId: "" },
+]
+//GET all players
+app.get("/players", (req, res) => {
+    console.log("Here into BL: GET all players")
+    res.json({ playersTab: players, message: "Done! " });
+})
+
+let findedPlayer;
+//GET Player by ID
+app.get("/players/:id", (req, res) => {
+    console.log("Here into BL: GET Player")
+    let id = req.params.id;
+    for (let i = 0; i < players.length; i++) {
+        if (players[i].id == id) {
+            findedPlayer = players[i]
+            break;
+        }
+    }
+    res.json({ Player: findedPlayer });
+})
+
+//ADD Player
+app.post("/players", (req, res) => {
+    console.log("Here into BL: ADD Player")
+    let player = req.body;
+    player.id = generateId(players)
+    players.push(player)
+    res.json({ message: "Added Player successfly !" });
+})
+
+//DELETE Player
+app.delete("/players/:id", (req, res) => {
+    console.log("Here into BL: DELETE Player")
+    let id = req.params.id;
+    for (let i = 0; i < players.length; i++) {
+        if (players[i].id == id) {
+            players.splice(i, 1)
+            break;
+        }
+    }
+    res.json({ isDeleted: true });
+})
+
+//EDIT Player
+app.put("/Players", (req, res) => {
+    console.log("Here into BL: EDIT Player")
+    let player = req.body;
+    for (let i = 0; i < players.length; i++) {
+        if (Players[i].id == player.id) {
+            Players[i] = player;
+            break;
+        }
+    }
+    res.json({ isUpdated: true })
+})
+
+// ============================
+// =========== user ===========
+// ============================
+let users = [
+    { id: 1, firstName: "amine", lastName: "amine", email: "amin@gmail.com", pwd: "123456", address: "tunis", phone: "22555666" },
+    { id: 2, firstName: "mohamed", lastName: "amine", email: "amin@gmail.com", pwd: "123456", address: "tunis", phone: "22555666" },
+    { id: 3, firstName: "yassine", lastName: "amine", email: "amin@gmail.com", pwd: "123456", address: "tunis", phone: "22555666" },
+];
+
+//Signup
+app.post("/users/signup", (req, res) => {
+    console.log("here into BL: add User", req.body)
+    let user = req.body
+
+    if (checkEmail(user.email, users)) {
+        res.json({ message: "Email exists !" });
+    } else {
+        user.id = generateId(users)
+        users.push(user)
+        res.json({ message: "Added user successfly !" });
+    }
+
+
+})
+
+//Login
+let exist =false;
+app.post("/users/signin", (req, res) => {
+    console.log("here into BL: Login User", req.body)
+    let user ;
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].email == req.body.email && users[i].pwd == req.body.pwd) {
+          exist = true
+          user=users[i]
+          break;
+        }
+      }
+        res.json({ loggingIn: exist});  
+})
+
+function checkEmail(email, usersTab) {
+    let exist = false;
+    for (let i = 0; i < usersTab.length; i++) {
+        if (usersTab[i].email == email) {
+            exist = true
+        }
+        return exist;
+    }
+}
+
+//make app importable
+module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //GET Team by ID
+// app.get("/Teams/:id",(req,res) => {
+//     console.log("Here into BL: GET Team")
+// })
+
+// //ADD Teams
+// app.post("/Teams",obj,(req,res) => {
+//     console.log("Here into BL: POST Team")
+// })
+// //DELETE Team
+// app.delete("/Teams/:id",(req,res) => {
+//     console.log("Here into BL: DELETE Team")
+// })
+// //EDIT Team
+// app.put("/Teams",obj,(req,res) => {
+//     console.log("Here into BL: PUT Team")
+// })

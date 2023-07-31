@@ -1,0 +1,25 @@
+<div class="hero overlay" style="background-image: url('assets/images/bg_3.jpg');">
+    <div class="container">
+        <form #searshForm="ngForm" (ngSubmit)="searsh()">
+            <div class="row align-items-center">
+                <div class="input-group mb-3" style=" margin-top: 70px;">
+                    <input type="text" class="form-control" name="name" [(ngModel)]="team.name" style=" color: red;">
+                    <button class="btn btn-danger" type="submit" id="button-addon2">Searsh</button>
+                </div>
+            </div>
+        </form>
+        <p style=" color: ffffff;">Team Name : {{findedTeam.name}}</p>
+        <p>Team owner : {{findedTeam.owner}}</p>
+        <p>Team foundation : {{findedTeam.foundation}}</p>
+        <!-- <p>Team Stadium : {{searshStadium(findedTeam.stadiumId).name}}</p> -->
+        <!-- <p>Team Stadium : {{searshStadium(findedTeam.stadiumId).city}}</p> -->
+        <!-- <p>Team Stadium : {{searshStadium(findedTeam.stadiumId).capacity}}</p> -->
+        <!-- <p *ngfor="let p of searshPlayers(findedTeam.id)"></p> -->
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+</div>

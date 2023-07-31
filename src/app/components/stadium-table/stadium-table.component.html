@@ -1,0 +1,24 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">City</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stadium of stadiums">
+            <th scope="row">{{stadium._id}}</th>
+            <td>{{stadium.name}}</td>
+            <td>{{stadium.capacity}}</td>
+            <td>{{stadium.city}}</td>
+            <td>
+                <button type="button" class="btn btn-light mr-2" (click)="goDisplayStadium([stadium._id])">Display</button>
+                <button type="button" class="btn btn-light mr-2" (click)="goEditStadium([stadium._id])">Edit</button>
+                <button type="button" class="btn btn-light mr-2 " (click)="deleteStadium([stadium._id])">Delete</button>    
+            </td>
+        </tr>
+    </tbody>
+</table>

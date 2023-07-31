@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row ">
+        <div class="  align-items-start col-12" style="margin-top: 150px;">
+            <div class="nav  nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                    aria-selected="true">Matches</button>
+                <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                    aria-selected="false">Players</button>
+                <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
+                    aria-selected="false">Teams</button>
+                <button class="nav-link" id="v-pills-stadium-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-stadium" type="button" role="tab" aria-controls="v-pills-stadium"
+                    aria-selected="false">stadium</button>
+                <button class="nav-link" id="v-pills-stadium-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-store" type="button" role="tab" aria-controls="v-pills-store"
+                    aria-selected="false">Store</button>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                    aria-labelledby="v-pills-home-tab" tabindex="0">
+                   <app-matchs-table></app-matchs-table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"
+                    tabindex="0">
+                    <app-players-table></app-players-table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"
+                    tabindex="0">
+                    <app-teams-table></app-teams-table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-stadium" role="tabpanel" aria-labelledby="v-pills-stadium-tab"
+                    tabindex="0">
+                    <app-stadium-table></app-stadium-table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-store" role="tabpanel" aria-labelledby="v-pills-store-tab"
+                    tabindex="0">
+                    <app-store-table></app-store-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Nbre</th>
+            <th scope="col">Age</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of players">
+            <th scope="row">{{player._id}}</th>
+            <td>{{player.name}}</td>
+            <td>{{player.position}}</td>
+            <td>{{player.nbre}}</td>
+            <td>{{player.age}}</td>
+            <td>
+                <button type="button" class="btn btn-light mr-2 " (click)="deletePlayer([player._id])">Display</button>
+                <button type="button" class="btn btn-light mr-2" (click)="goEditPlayer([player._id])">Edit</button>
+                <button type="button" class="btn btn-light mr-2 " (click)="deletePlayer([player._id])">Delete</button>
+
+            </td>
+        </tr>
+       
+       
+    </tbody>
+</table>

@@ -1,0 +1,13 @@
+//import mongoose module
+const mongoose = require("mongoose")
+//schema
+const stadiumSchema = mongoose.Schema({
+    name: String ,
+    capacity: Number,
+    city:String,
+    
+})
+//Model Name (collection 'Stadiums' will be created/generated)
+const stadium = mongoose.model("Stadium",stadiumSchema);
+// Make file exporatable
+module.exports = stadium;
